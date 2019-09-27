@@ -14,4 +14,6 @@ La validación se hará a nivel del comportamiento de una partícula individual 
 crecientes de partículas.
 
 # Objetivos
-- [Meta 3] : Implementacion y validacion del codigo para una partıcula considerando un perfil de velocidades sencillo.
+Implementar un modelo de simulacion numerico para transporte de sedimentos de fondo. Comprender aspectos de desempeño de aplicaciones de computación científica tales como IO y complejidad algorítmica.
+
+- [Meta 3] : Implementación y validación del código para una partícula considerando un perfil de velocidades sencillo.
