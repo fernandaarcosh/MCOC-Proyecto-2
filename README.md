@@ -9,7 +9,7 @@ Integrantes:
 - Anibal Tapia Triviño   (https://github.com/tapiolaa)
 
 # Introducción
-En el siguiente proyecto se implementará y validará un modelo de simulación de transporte de sedimentos en base a un método lagrangiano. 
+En este proyecto se implementará y validará un modelo de simulación de transporte de sedimentos en base a un método lagrangiano, en específico el método de Euler. 
 La validación se hará a nivel del comportamiento de una partícula individual y luego con el comportamiento estadístico de cantidades
 crecientes de partículas.
 
