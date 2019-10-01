@@ -17,3 +17,4 @@ crecientes de partículas.
 Implementar un modelo de simulacion numerico para transporte de sedimentos de fondo. Comprender aspectos de desempeño de aplicaciones de computación científica tales como IO y complejidad algorítmica.
 
 - [Meta 3] : Implementación y validación del código para una partícula considerando un perfil de velocidades sencillo.
+- [Entrega 3] : (script saltation_one_particle.py) 
