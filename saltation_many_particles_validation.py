@@ -1,7 +1,6 @@
 # Proyecto 2 
 from matplotlib.pylab import *
 
-
 #Unidades base SI
 _m = 1.
 _mm = 1e-3*_m
@@ -12,7 +11,6 @@ _gr = 1e-3*_kg
 _ton = 1e3*_kg
 
 _s = 1.
-
 
 #velocidades iniciales
 vfx = 10.0*_m/_s #m/s 
@@ -31,14 +29,11 @@ v0n = array([1.,2.], dtype=double)
 xim1 = zeros(2, dtype=double)
 vim1 = zeros(2, dtype=double)
 
-
-
 g = 9.81 *_m/_s**2
 d= 1*_mm
 rho = 2650.*_kg/(_m**3)
 Cd = 0.47 # particula esferica
 rho_agua = 1000*_kg/(_m**3)
-
 
 V = (4./3.)*pi*(d/2)**3
 A = pi*(d/2)**2
@@ -92,9 +87,34 @@ def particula(z,t):
 	return zp
 
 from scipy.integrate import odeint
-n = 4 # numero de particulas
-z0 = zeros(4*n)
 
+# Para un numero deseado de particulas
+#n = input("Numero de Particulas") # numero de particulas
+#x_store = []
+#v_store = []
+#for i in range (0,n):
+#	p1 = float(random.randit(0,n))
+#	x0n = array([0., p1*_mm], dtype=double)
+#	v0n = array([1., 1.], dtype=double)
+#	xin = x0n
+#	vin = v0n
+# 	xin1 = zeros(2, dtype=double)
+# 	vin1 = zeros(2, dtype=double)
+#	z0 = zeros(4)
+#	z0[:2] = x0n
+#	z0[2:] = v0n
+#	z = odeint(particula, z0, t)
+#	xn = z[:, :2]
+#	vn = z[:, 2:]
+
+#x_store.append(xn)
+#v_store.append(vn)
+
+
+	
+#Para 2 particulas
+n = 2
+z0 = zeros(4*n)
 z0[:2] = x0
 z0[2:4] = v0
 z0[4:6] = x0n
@@ -106,8 +126,6 @@ x = z[:,:2]
 v = z[:,2:4]
 xn = z[:,4:6]
 vn = z[:,6:8]
-
-print (xn, vn)
 
 figure()
 plot(x[:, 0.], x[:, 1.], label="x")
