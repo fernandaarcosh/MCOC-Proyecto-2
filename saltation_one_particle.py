@@ -6,7 +6,8 @@ from matplotlib.pylab import *
 _m = 1.
 _kg = 1.
 _s = 1.
-_mm = 1e-3*_m
+_mm = 1e-3*_m.
+
 _gr = 1e-3*_kg
 
 
