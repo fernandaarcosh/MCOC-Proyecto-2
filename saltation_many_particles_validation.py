@@ -13,7 +13,7 @@ vfx = 10.0*_m/_s
 vfy = 0.1*_m/_s
 
 # velocidades iniciales Particual 2
-vfxdos = 10.0*_m/_s
+vfxdos = 5.0*_m/_s
 vfydos = 0.1*_m/_s
 
 # Posicion y velocidad actual de la particula 1
@@ -21,7 +21,7 @@ x0 = array([0., 1.*_mm], dtype=double)
 v0 = array([1., 1.], dtype=double) 
 
 # Posicion y velocidad actual de la particula 2
-x0dos = array([0., 1.*_mm], dtype=double) # Parte un instante despues
+x0dos = array([0., 20.*_mm], dtype=double) # Parte un instante despues
 v0dos = array([1., 2.], dtype=double)
 
 # Particula 1
@@ -31,8 +31,8 @@ xim1 = zeros(2, dtype=double)   # posicion siguiente
 vim1 = zeros(2, dtype=double)   # velocidad siguiente
 
 # Particula 2
-xidos = x0dos #zeros(2, dtype=double)      # posicion actual
-vidos = v0dos #zeros(2, dtype=double)      # velocidad actual
+xidos = x0dos      # posicion actual
+vidos = v0dos     # velocidad actual
 xim1dos = zeros(2, dtype=double)   # posicion siguiente
 vim1dos = zeros(2, dtype=double)   # velocidad siguiente
 
@@ -61,6 +61,11 @@ norm = lambda v: sqrt(dot(v,v))
 
 k_penal = 1000.*0.5*Cd*rho_agua*A*norm(v0)/(1*_mm)
 
+
+lista_particula1=[]
+
+
+
 # Funcion para la particula 1
 def particula(z,t):
 	xi = z[:2]
@@ -81,8 +86,8 @@ def particula(z,t):
 
 
 	zp[2:] = Fi/m
+	lista_particula1.append(xi)
 	return zp
-
 
 # Funcion para la particula 2
 def particula2(z,t):
@@ -111,7 +116,6 @@ from scipy.integrate import odeint
 
 # Variables para particula 2
 
-
 z0dos = zeros(4)
 z0dos[:2] = x0dos
 z0dos[2:] = v0dos
@@ -129,38 +133,39 @@ z = odeint(particula, z0, t)
 x = z[:,:2] # definir x igual a z
 v = z[:,2:]
 
-# Figura de movimiento de ambas particulas moviendose
 
+
+
+# Figura de movimiento de ambas particulas superpuestas, moviendose tanto en el eje X como en el eje Y
 figure()
-plot(x[:,0],x[:,1])
+plot(x[:,0],x[:,1], label="Particula1")
 ylim([0,10*_mm])
-plot(xdos[:,0],xdos[:,1])
+plot(xdos[:,0],xdos[:,1], label="Particula2")
 ylim([0,10*_mm])
+plt.xlabel("Avance Particula (mm)")
+plt.ylabel("Altura Particula (mm)")
+plt.title("Movimiento de 2 particulas")
 plt.legend()
 
+# Movimiento de la particula en el tiempo
 figure()
 subplot(2,1,1)
-plot(t,x[:,0], label="x")
-plot(t,x[:,1], label="y")
+plot(t,x[:,0], label="x1")
+plot(t,x[:,1], label="y1")
+plot(t,xdos[:,0], label="x2")
+plot(t,xdos[:,1], label="y2")
+plt.title("Movimiento y Velocidad de 2 Particulas en funcion del tiempo")
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Distancia (mm)")
 plt.legend()
 
+# Velocidad de la particula en el tiempo, Aceleracion
 subplot(2,1,2)
-plt.plot(t,v[:,0], label="vx")
-plt.plot(t,v[:,1], label="vy")
-plt.legend()
+plt.plot(t,v[:,0], label="vx1")
+plt.plot(t,v[:,1], label="vy1")
+plot(t,vdos[:,0], label="vx2")
+plot(t,vdos[:,1], label="vy2")
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Velocidad (m/s)")
+legend()
 show()
-
-# Particula 2
-
-figure()
-subplot(2,1,1)
-plot(t,xdos[:,0], label="x")
-plot(t,xdos[:,1], label="y")
-plt.legend()
-
-subplot(2,1,2)
-plot(t,vdos[:,0], label="vx")
-plot(t,vdos[:,1], label="vy")
-
-show()
-
