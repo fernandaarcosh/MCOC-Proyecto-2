@@ -59,6 +59,7 @@ Nt = len(t)
 
 norm = lambda v: sqrt(dot(v,v))
 
+# K de penalización
 k_penal = 1000.*0.5*Cd*rho_agua*A*norm(v0)/(1*_mm)
 
 
@@ -111,11 +112,10 @@ def particula2(z,t):
 
 # el vector z tiene la posicion y la velocidad de 
 # la particula
+
 from scipy.integrate import odeint
 
-
 # Variables para particula 2
-
 z0dos = zeros(4)
 z0dos[:2] = x0dos
 z0dos[2:] = v0dos
@@ -123,18 +123,13 @@ zdos = odeint(particula2, z0dos, t)
 xdos = zdos[:,:2] # definir x igual a z
 vdos = zdos[:,2:]
 
-
 # Particula 1
-
 z0 = zeros(4)
 z0[:2] = x0
 z0[2:] = v0
 z = odeint(particula, z0, t)
 x = z[:,:2] # definir x igual a z
 v = z[:,2:]
-
-
-
 
 # Figura de movimiento de ambas particulas superpuestas, moviendose tanto en el eje X como en el eje Y
 figure()
