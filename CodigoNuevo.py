@@ -66,45 +66,43 @@ k_penal= 1000*0.5*Cd*rho_agua*A*norm(vfx)**2/(1*_mm)
 
 
 def particula(z,t):
-	zp= zeros(4*Nparticulas)
+		zp = zeros(4*Nparticulas)
 
-	for i in range(Nparticulas):
-		di=d
-		xi=z[4*i:(4*i+2)]
-		vi=z[4*i+2:(4*i+4)]
+		for i in range(Nparticulas):
+			di = d 
+			xi = z[4*i:(4*i+2)]
+			vi = z[4*i+2:(4*i+4)]
 
-		vf= velocity_field(xi)
-		vf_top=norm(velocity_field(xi+(di/2*jhat))) #completar
-		vf_bot=norm(velocity_field(xi+(di/2*jhat)))#completar
-		vrel=vf-vi
-		fD=(0.5*Cd*alpha*rho_agua*norm(vrel)*A)*vrel #completar
-		fL=(0.5*CL*alpha*rho_agua*(vf_top**2 -vf_bot**2)*A)*jhat #Completar
+			vf = velocity_field(xi)
+			vf_top = norm(velocity_field(xi + (di/2)*jhat)) #falta
+			vf_bot = norm(velocity_field(xi - (di/2)*jhat)) #falta
+			vrel = vf - vi
+			fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*A)*vrel  #falta
+			fL = (0.5*CL*alpha*rho_agua*(vf_top*2 -vf_bot*2)*A)*jhat #falta
 
-		Fi=W+fD+fL
+			Fi = W + fD + fL
 
-		if xi[1]<di/2:
-			Fi[1]+=-k_penal*xi[1]
+			if xi[1] < 0:
+				Fi[1] += -k_penal*xi[1]
 
+			zp[4*i:(4*i+2)] = vi
+			zp[4*i+2:(4*i+4)] = Fi/m
 
-		zp[4*i:(4*i+2)]=vi
-		zp[4*i+2:(4*i+4)]=Fi/m
+			for i in range(Nparticulas):
+				xi = z[4*i:(4*i+2)]
+				for j in range(Nparticulas):
+					if i > j:
+						xj = z[4*j:(4*j+2)]
+						rij = xj -xi
+						if norm(rij) < d:
+							delta = d - norm(rij)
+							nij = rij/norm(rij)
+							Fj = k_penal*delta*nij
+							Fi = -k_penal*delta*nij
+							zp[4*i+2:(4*i+4)] += Fi/m
+							zp[4*j+2:(4*j+4)] += Fj/m
 
-
-	for  i in range(Nparticulas):
-		xi=z[4*i:(4*i+2)]
-		for j in range(Nparticulas):
-			if i>j:
-				xj=z[4*j:(4*j+2)]
-				rij=xj-xi
-				if norm(rij)<d:
-					delta=d-norm(rij)	
-					nij= rij/norm(rij)
-					Fj= k_penal*delta*nij
-					Fi=-Fj
-					zp[4*i+2:(4*i+4)] += Fi/m
-					zp[4*j+2:(4*j+4)] += Fi/m
-
-	return zp
+		return zp
 
 
 from scipy.integrate import odeint
