@@ -77,8 +77,8 @@ def particula(z,t):
 		vf_top=norm(velocity_field(xi+(di/2*jhat))) #completar
 		vf_bot=norm(velocity_field(xi+(di/2*jhat)))#completar
 		vrel=vf-vi
-		fD=(0.5*Cd*alpha*rho_agua) #completar
-		fL=#completar
+		fD=(0.5*Cd*alpha*rho_agua*norm(vrel)*A)*vrel #completar
+		fL=(0.5*CL*alpha*rho_agua*(vf_top**2 -vf_bot**2)*A)*jhat #Completar
 
 		Fi=W+fD+fL
 
@@ -99,10 +99,10 @@ def particula(z,t):
 				if norm(rij)<d:
 					delta=d-norm(rij)	
 					nij= rij/norm(rij)
-					Fj= k_penal #completar
+					Fj= k_penal*delta*nij
 					Fi=-Fj
-					zp[4*i+2:(4*i+4)]	#completar
-					zp[4*i+2:(4*i+4)]	#completar
+					zp[4*i+2:(4*i+4)] += Fi/m
+					zp[4*j+2:(4*j+4)] += Fi/m
 
 	return zp
 
@@ -131,6 +131,6 @@ for i in range(Nparticulas):
 	
 ax.axhline(0.5,color="k", linestyle="--")
 
+show()
 
 
-# Completar Show
