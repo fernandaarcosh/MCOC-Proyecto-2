@@ -1,5 +1,6 @@
 from matplotlib.pylab import *
-
+from time import time
+tiempo_inicial = time() 
 # Unidades base SI (m, kg, s)
 _m = 1.
 _kg = 1.
@@ -133,7 +134,7 @@ for i in range(Nparticulas):
 	col= rand(3)
 	plot(xi[0],yi[0],"o",color="r")
 
-	plot(xi,yi,color=col)
+	plot(xi,yi,color=col)	
 	
 ax.axhline(d/2,color="k", linestyle="--")
 ax.axhline(0,color="k", linestyle="--")
@@ -142,3 +143,9 @@ plt.ylabel("Altura direccion Y (mm)")
 plt.title("Movimiento de particulas (plano XY)")
 plt.legend()
 show()
+
+tiempo_final= time() 
+
+tiempo_de_compilacion= tiempo_final-tiempo_inicial	
+
+print 'El tiempo de ejecucion fue:',tiempo_de_compilacion, "segundos" #En segundos

@@ -59,7 +59,7 @@ Nt = len(t)
 
 norm = lambda v: sqrt(dot(v,v))
 
-# K de penalización
+
 k_penal = 1000.*0.5*Cd*rho_agua*A*norm(v0)/(1*_mm)
 
 
