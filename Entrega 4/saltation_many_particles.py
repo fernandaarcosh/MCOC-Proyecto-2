@@ -75,16 +75,17 @@ def particula(z,t):
 			vi = z[4*i+2:(4*i+4)]
 
 			vf = velocity_field(xi)
-			vf_top = norm(velocity_field(xi + (di/2)*jhat)) #falta
-			vf_bot = norm(velocity_field(xi - (di/2)*jhat)) #falta
+			vf_top = norm(velocity_field(xi + (di/2)*jhat)) 
+			vf_bot = norm(velocity_field(xi - (di/2)*jhat)) 
 			vrel = vf - vi
 			fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*A)*vrel  #formula wiki
 			#fD = alpha*(R*(d*g/(ustar**2))-(3./4.)*Cd*(vrel)*norm(vrel)) # formula PM
-			fL = (0.5*CL*alpha*rho_agua*(vf_top**2 -vf_bot**2)*A)*jhat #formula wiki
-			#fL = alpha*(3/4*CL*(norm(vf_top)**2 - norm(vf_bot)**2))
+			fL = (0.5*CL*alpha*rho_agua*norm(vf_top**2 - vf_bot**2)*A)*jhat #formula wiki
+			#fL = alpha*(3/4*CL*(norm(vf_top)**2 - norm(vf_bot)**2)) # formula PM
+			fB = - rho_agua*g*V*jhat # fromula de empuje
 
 
-			Fi = W + fD + fL
+			Fi = W + fD + fL + fB
 
 			if xi[1] < 0:
 				Fi[1] += -k_penal*xi[1]
@@ -136,4 +137,8 @@ for i in range(Nparticulas):
 	
 ax.axhline(d/2,color="k", linestyle="--")
 ax.axhline(0,color="k", linestyle="--")
+plt.xlabel("Avance direccion X (mm)")
+plt.ylabel("Altura direccion Y (mm)")
+plt.title("Movimiento de particulas (plano XY)")
+plt.legend()
 show()
