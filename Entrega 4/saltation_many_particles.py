@@ -1,6 +1,7 @@
 from matplotlib.pylab import *
 from time import time
 tiempo_inicial = time() 
+
 # Unidades base SI (m, kg, s)
 _m = 1.
 _kg = 1.
@@ -23,7 +24,7 @@ ti= 0.*_s
 
 
 
-Nparticulas=5
+Nparticulas= 15
 
 x0=10*d*rand(Nparticulas)
 y0=3*d*rand(Nparticulas)+d
@@ -43,7 +44,7 @@ Nt=len(t)
 norm= lambda v: sqrt(dot(v,v))
 
 Cd=0.47
-Cm=0.5
+Cm= 2/3*pi*(d/2)**3*rho_agua # 0.5 ; para una esfera la masa aderida es 2/3*pi*(d/2)**3*rho_agua (sacado de wiki)
 CL=0.2
 Rp=73.
 R= ((rho_particula/rho_agua) -1)
@@ -83,7 +84,7 @@ def particula(z,t):
 			#fD = alpha*(R*(d*g/(ustar**2))-(3./4.)*Cd*(vrel)*norm(vrel)) # formula PM
 			fL = (0.5*CL*alpha*rho_agua*norm(vf_top**2 - vf_bot**2)*A)*jhat #formula wiki
 			#fL = alpha*(3/4*CL*(norm(vf_top)**2 - norm(vf_bot)**2)) # formula PM
-			fB = - rho_agua*g*V*jhat # fromula de empuje
+			fB =  alpha*(-rho_agua*g*V*jhat) # fromula de empuje
 
 
 			Fi = W + fD + fL + fB
@@ -110,9 +111,13 @@ def particula(z,t):
 
 		return zp
 
+#Choque entre particulas:
+# j = -f*(1+e)*n*(vxi-vxj)*(m/2)
 
 #choque con el suelo
 # r/d = 0.5*(cos(tethab)-tan(tethain)*sin(tethab))
+#promedio de los saltos de las particulas, H/d para un Tstar/tcritico definido.
+# caracteristicas de pc, raficar tiempo de particulas respecto a cuantose demora.
 
 from scipy.integrate import odeint
 z0= zeros(4*Nparticulas)
@@ -134,7 +139,7 @@ for i in range(Nparticulas):
 	col= rand(3)
 	plot(xi[0],yi[0],"o",color="r")
 
-	plot(xi,yi,color=col)	
+	plot(xi,yi,color=col)
 	
 ax.axhline(d/2,color="k", linestyle="--")
 ax.axhline(0,color="k", linestyle="--")
