@@ -26,5 +26,5 @@ Fernanda Arcos Hernández:
 En la [Entrega 4] como se menciona anteriormente se observan los resultados para el salto de varias particulas en un flujo determinado.A estas partículas se les considera la fuerza de Drag, Lift, Peso y Empuje. Las partículas poseen un diametro de 15 mm; lo que conlleva una densidad de 2650 Kg/m^3 y una velocidad (ustar) predeterminada con los papers entregados de 0.18. 
 Se realizó una prueba de como es que funciona el código a medida que aumenta la cantidad de partículas, se observa que el tiempo es mayor a medida que aumenta el número; pero como el código funciona de manera aleatoria, mientras más choques entre particulas existan, mayor sera el tiempo dentro de una misma cantidad; para poder sacar un promedio del tiempo se implemento el código en tres oportunidades por cada n° de particulas, obteniendo un promedio.
 
-En el código se realiza la variación de 1 a 20 párticulas y observar su movimiento durante 5s con un dt =0,001 s.
+En el código se realiza la variación de 1 a 20 párticulas y observar su movimiento durante 2s con un dt =0,001 s.
 
