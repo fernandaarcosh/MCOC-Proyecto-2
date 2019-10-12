@@ -28,3 +28,33 @@ Se realizó una prueba de como es que funciona el código a medida que aumenta l
 
 En el código se realiza la variación de 1 a 20 párticulas y observar su movimiento durante 2s con un dt =0,001 s.
 
+Gráfico para:
+
+Nparticulas = 2
+
+![Np 2 2s](https://user-images.githubusercontent.com/53495949/66692300-7895fb00-ec73-11e9-88de-44fb537f63e0.JPG)
+
+Nparticulas = 5
+
+![Np5 2s](https://user-images.githubusercontent.com/53495949/66691821-6b770d00-ec6f-11e9-8cc5-5a13a24c4a92.JPG)
+
+Nparticulas = 10 
+
+![Np10 2s](https://user-images.githubusercontent.com/53495949/66691826-7af65600-ec6f-11e9-8653-ed793aa2ff7c.JPG)
+
+Nparticulas = 15
+
+![Np 15 2s](https://user-images.githubusercontent.com/53495949/66691839-8c3f6280-ec6f-11e9-9624-425acd97aa6f.JPG)
+
+Nparticulas = 20
+
+
+![Np20 2s](https://user-images.githubusercontent.com/53495949/66692314-8c416180-ec73-11e9-9b45-69c4ed135a57.JPG)
+
+
+El programa para 20 particulas demoro en promedio un total de 414 s
+
+![tiempo](https://user-images.githubusercontent.com/53495949/66692324-b2ff9800-ec73-11e9-8970-d703b92f7979.JPG)
+
+Finalmente las caracteristicas del computador en el cual se ejecuto el código son:
+![propiedades equipo](https://user-images.githubusercontent.com/53495949/66691856-bc870100-ec6f-11e9-98ea-c0e38c436041.JPG)
