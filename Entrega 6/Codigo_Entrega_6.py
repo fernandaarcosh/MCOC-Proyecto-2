@@ -1,6 +1,6 @@
 from matplotlib.pylab import *
 from parameters import *
-from funciones import *
+from functions import *
 from time import time
 
 
@@ -50,64 +50,6 @@ else:
 	savez("initial_condition.npz", x0 = x0, y0 = y0, vx0 = vx0, vy0 = vy0, Nparticulas = Nparticulas)
 
 
-def particula(z,t):
-		zp = zeros(4*Nparticulas)
-
-		for i in range(Nparticulas):
-			di = d 
-			xi = z[4*i:(4*i+2)]
-			vi = z[4*i+2:(4*i+4)]
-
-			xtop = xi + (d/2)*jhat
-			xbot = xi - (d/2)*jhat
-			vf = velocity_field(xi + 0*jhat)
-			vf_top = abs(velocity_field(xtop)[0]) 
-			vf_bot = norm(velocity_field(xbot)[0]) 
-			vrel = vf - vi
-			fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*A)*vrel  #formula wiki
-			#fD = alpha*(R*(d*g/(ustar**2))-(3./4.)*Cd*(vrel)*norm(vrel)) # formula PM
-			fL = (0.5*CL*alpha*rho_agua*norm(vf_top**2 - vf_bot**2)*A)*jhat #formula wiki
-			#fL = alpha*(3/4*CL*(norm(vf_top)**2 - norm(vf_bot)**2)) # formula PM
-			fB =  alpha*(-rho_agua*g*V*jhat) # fromula de empuje
-
-
-			Fi = W + fD + fL + fB
-
-			xs = (xi[0]//d)*d + d/2
-			cxs = array([xs,0])
-			dxs = xi - cxs
-			if norm(dxs) < d:
-				delta = d - norm(dxs)
-				nxs = dxs/norm(dxs)
-				Fi += k_penal*delta*nxs
-
-			zp[4*i:(4*i+2)] = vi
-			zp[4*i+2:(4*i+4)] = Fi/m
-
-			for i in range(Nparticulas):
-				xi = z[4*i:(4*i+2)]
-				for j in range(Nparticulas):
-					if i > j:
-						xj = z[4*j:(4*j+2)]
-						rij = xj -xi
-						if norm(rij) < d:
-							delta = d - norm(rij)
-							nij = rij/norm(rij)
-							Fj = k_penal*delta*nij
-							Fi = -k_penal*delta*nij
-							zp[4*i+2:(4*i+4)] += Fi/m
-							zp[4*j+2:(4*j+4)] += Fj/m
-
-		return zp
-
-#Choque entre particulas:
-# j = -f*(1+e)*n*(vxi-vxj)*(m/2)
-
-#choque con el suelo
-# r/d = 0.5*(cos(tethab)-tan(tethain)*sin(tethab))
-#promedio de los saltos de las particulas, H/d para un Tstar/tcritico definido.
-# caracteristicas de pc, raficar tiempo de particulas respecto a cuantose demora.
-
 from scipy.integrate import odeint
 zk= zeros((4*Nparticulas))
 zkm1 = zeros((4*Nparticulas))
@@ -117,9 +59,8 @@ zk[1::4] = y0
 zk[2::4] = vx0
 zk[3::4] = vy0
 
-
+# Se crea un archivo para guardar los resultados de las particulas
 arch_part = open("resultado.txt", "w")
-
 
 #z=odeint(particula,z0,t)
 hecho = zeros(Nparticulas, dtype=int32)
