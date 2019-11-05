@@ -1,52 +1,8 @@
 from matplotlib.pylab import *
-#from parameters import *
-#from funciones import *
+from parameters import *
+from funciones import *
 from time import time
 
-# Unidades base SI (m, kg, s)
-_m = 1.
-_kg = 1.
-_s = 1.
-_mm = 1e-3*_m
-_cm = 1e-2*_m
-_gr = 1e-3*_kg 
-_in= 2.54*_cm
-
-
-g= 9.81*_m/_s**2
-d= 15*_mm
-
-rho_agua=1000.*_kg/(_m**3)
-rho_particula= 2650.*_kg/(_m**3)
-
-A=pi*(d/2)**2
-V=(4./3.)*pi*(d/2)**3
-m= rho_particula*V
-
-W=array([0,-m*g])
-
-t=arange(0,tmax,dt)
-Nt=len(t)
-
-norm= lambda v: sqrt(dot(v,v))
-
-Cd =0.47
-Cm = 2/3*pi*(d/2)**3*rho_agua # 0.5 ; para una esfera la masa aderida es 2/3*pi*(d/2)**3*rho_agua (sacado de wiki)
-CL =0.2
-Rp =73.
-R = ((rho_particula/rho_agua) -1)
-alpha = 1/(1+R+Cm)
-
-
-ihat = array([1,0])
-jhat = array([0,1])
-
-ustar = 0.18*_m/_s # sqrt(tauw/rho_agua)
-
-
-dt = 0.001*_s 
-tmax = 1*_s
-#ti= 0.*_s
 
 reuse_initial_condition = True
 # reuse_initial_condition = False
@@ -62,7 +18,6 @@ t = arrange(0, tmax, dt)
 Nt = len(t)
 
 Nparticulas = 2
-
 
 if reuse_initial_condition:
 	print "Reusando condiciones iniciales"
@@ -93,33 +48,6 @@ else:
 	vx0 = ustar*rand(Nparticulas)
 	vy0 = 0
 	savez("initial_condition.npz", x0 = x0, y0 = y0, vx0 = vx0, vy0 = vy0, Nparticulas = Nparticulas)
-
-
-
-#if Nparticulas <= 5:
-#	x0=10*d*rand(Nparticulas)
-#	y0=20*d*rand(Nparticulas)+d
-#elif Nparticulas > 5 and Nparticulas <=12:
-#	x0=30*d*rand(Nparticulas)
-#	y0=60*d*rand(Nparticulas)+d
-#else:
-#	x0=60*d*rand(Nparticulas)
-#	y0=90*d*rand(Nparticulas)+10*d
-
-#vx0= rand(Nparticulas)/2
-#vy0= rand(Nparticulas)/2
-
-
-def velocity_field(x):
-	z=x[1]/d
-	if z>1./30:
-		uf= ustar*log(30.*z)/0.41
-	else:
-		uf=0
-
-	return array([uf,0])
-vfx= velocity_field([0, 4*d])[0]
-k_penal= 1000*0.5*Cd*rho_agua*A*norm(vfx)**2/(1*_mm)
 
 
 def particula(z,t):
