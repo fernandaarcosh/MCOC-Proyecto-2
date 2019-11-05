@@ -3,12 +3,14 @@ from parameters import *
 
 norm = lambda v: sqrt(dot(v,v))
 
+# Funcion para entregar datos geometricos y propiedades de la particula:
 def propiedades_area_volumen_masa(d):
 	area= pi * (d/2) ** 2
 	vol = (4./3.) * pi * (d/2) ** 3
 	masa = rho_particula * vol
 	return area, vol, masa
 
+# Funcion realizada para obtener las Fuerzas que actuan sobre la particula dentro del flujo:
 def fuerzas_hidrodinamicas(x,v,d,area,masa):
 
 	xtop = x + (d/2)*jhat
@@ -19,17 +21,20 @@ def fuerzas_hidrodinamicas(x,v,d,area,masa):
 	vrelf_bot = abs(velocity_field(xbot)[0])
 
 	vrel = vf - v
-
 	Cd = 0.47
-	fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*area)*vrel
+	
+	fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*area)*vrel # Fuerza de Drag
 
-	fL = (0.5*CL*alpha*rho_agua*(vrelf_top - vrelf_bot)*area)*vrel[0]*jhat
-	fW = (-masa*g)*jhat
+	fL = (0.5*CL*alpha*rho_agua*(vrelf_top - vrelf_bot)*area)*vrel[0]*jhat # Fuerza de Lift
+	
+	fW = (-masa*g)*jhat # Fuerza de Peso
+	
+	fB = alpha*(-rho_agua*g*V*jhat) # Fuerza Empuje
 
-	Fh = fW + fD + fL
-
+	Fh = fW + fD + fL + fB
 	return Fh
 
+# Funcion para definir el comportamoiento de la particula al tener impacto con el suelo:
 def fuerza_impacto_suelo(x,v,d):
 	N = around(x[0]/d)
 	r = x - (N * d) * ihat
@@ -41,11 +46,7 @@ def fuerza_impacto_suelo(x,v,d):
 		Fi = 0. * r 
 	return Fi
 
-
-
-
-
-
+# Funcion que posiciona los parametros de posicion y velocidad de cada particula:
 def zp_una_particula(z,t,d=d):
 	zp = zeros(4)
 
@@ -62,7 +63,6 @@ def zp_una_particula(z,t,d=d):
 	zp[2:4] = sumaF/masa
 
 	return zp
-
 
 
 def zp_todas_las_particulas(z,t):
@@ -99,9 +99,9 @@ def zp_M_particulas(z,t,M):
 
 	zp += zp_choque_M_particula(z,t,M=M)
 
-	return z|p
+	return zp
 
-
+# Funcion que determina el choque entre particulas:
 def zp_choque_M_particulas(z,t,M):
 	zp = zeros(4*M)
 	for i in range(M):
