@@ -6,7 +6,7 @@ import scipy as sp
 
 norm = lambda v: sqrt(dot(v,v))
 
-
+# Funcion que determina las propiedades fisicas de la particula:
 def propiedades_area_volumen_masa(d):
 	area= pi * (d/2) ** 2
 	vol = (4./3.) * pi * (d/2) ** 3
@@ -26,16 +26,16 @@ def fuerzas_hidrodinamicas(x,v,d,area,masa):
 	vrel = vf - v
 
 	Cd = 0.47
-	fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*area)*vrel
+	fD = (0.5*Cd*alpha*rho_agua*norm(vrel)*area)*vrel # Fuerza de Drag
 
-	fL = (0.5*CL*alpha*rho_agua*(vrelf_top - vrelf_bot)*area)*vrel[0]*jhat
-	fW = (-masa*g)*jhat
+	fL = (0.5*CL*alpha*rho_agua*(vrelf_top - vrelf_bot)*area)*vrel[0]*jhat # Fuerza de Lift
+	
+	fW = (-masa*g)*jhat # Fuerza de Peso
 
 	Fh = fW + fD + fL
-
 	return Fh
 
-# Funcion fuerzas impacto con el suelo
+# Funcion que determina la fuerza de impacto que se tiene en el suelo
 def fuerza_impacto_suelo(x,v,d):
 	N = around(x[0]/d)
 	r = x - (N * d) * ihat
@@ -47,6 +47,7 @@ def fuerza_impacto_suelo(x,v,d):
 		Fi = 0. * r 
 	return Fi
 
+# Funcion que configura los datos de posicion, velocidad y fuerzas sobre y de una particula
 def zp_una_particula(z,t,d=d):
 	zp = zeros(4)
 
@@ -64,8 +65,7 @@ def zp_una_particula(z,t,d=d):
 
 	return zp
 
-
-
+ 
 def zp_todas_las_particulas(z,t):
 	zp = zeros(4 * Nparticulas)
 
@@ -100,9 +100,9 @@ def M_particulas(z,t,M):
 
 	zp += zp_choque_M_particula(z,t,M=M)
 
-	return z|p
+	return zp
 
-
+# Funcion que determina el choque entre particulas, es decir cuales chocan y cuales no.
 def choque_M_particulas(z,t,M):
 	zp = zeros(4*M)
 	for i in range(M):
@@ -137,6 +137,7 @@ tiempo_bloque_2=0
 t=arange(0,tmax,dt)
 Nt=len(t)
 
+# Archivo de texto que guardara los datos de la simulacion realizada
 fout=open("Resultados.txt","w")
 #fout = open("resultado.txt","w")
 
