@@ -1,8 +1,10 @@
+
 from matplotlib.pylab import *
+# Numero de Particulas a modelar
 
-norm = lambda v: sqrt(dot(v,v))
+Nparticulas =5
 
-Nparticulas = 2
+# PARAMETROS
 
 #Unidades base son SI
 _m = 1.
@@ -13,7 +15,6 @@ _cm = 1e-2*_m
 _gr = 1e-3 * _kg
 _in = 2.54*_cm
 
-# Parametros definidos para la particula
 g = 9.81*_m/_s**2
 d = 0.15*_mm
 
@@ -23,31 +24,28 @@ rho_particula = 2650.*_kg/(_m**3)
 dt = 0.00001*_s    	# paso de tiempo 
 tmax = 0.05*_s  # tiempo maximo de simulacion
 
-# Coeficientes determinados para las fuerzas hidrodinamicas utilizadas
 Cd = 0.47 # Para particula esferica
 Cm = 0.5
 CL = 0.2
 Rp = 73.
-
 ustar = 0.14
 tau_star = 0.067  
-
-tau_cr = 0.22*Rp**(-0.6)+0.06*10**(-7*Rp**(-0.6))   # tau critico
-ustar = sqrt(tau_star * g * Rp * d)
-
 R = (rho_particula/rho_agua - 1)
 alpha = 1/(1 + R + Cm)
 
-# Coordenadas vectoriales, eje x,y
 ihat = array([1,0])
 jhat = array([0,1])
+norm=lambda v: sqrt(dot(v,v))
+tau_cr = 0.22*Rp**(-0.6)+0.06*10**(-7*Rp**(-0.6))   # tau critico
+ustar = sqrt(tau_star * g * Rp * d)
 
 print "tau_star=",tau_star
 print "tau_cr=",tau_cr
 print "tau_star/tau_cr=",tau_star/tau_cr
 print "ustar=",ustar
 
-# Funcion de velocidad del flujo
+
+# FUNCIONES
 def velocity_field(x):
 	z = x[1] /d
 
@@ -58,8 +56,8 @@ def velocity_field(x):
 		uf = 0
 		
 	return array([uf,0])
-	
 
+# estimar k_penal.... 
 vfx = velocity_field([0, 10*d])[0]
 A = pi*(d/2)**2
 k_penal = 0.5*Cd*rho_agua*A*norm(vfx)**2/(d/20)
