@@ -58,3 +58,25 @@ El programa para 20 particulas demoro en promedio un total de 414 s
 
 Finalmente las caracteristicas del computador en el cual se ejecuto el código son:
 ![propiedades equipo](https://user-images.githubusercontent.com/53495949/66691856-bc870100-ec6f-11e9-98ea-c0e38c436041.JPG)
+
+En la [Entrega 6] En esta entrega se pretendió optimizar el código de la [Entrega 4]  
+Nuevamente se observa un aumento en el tiempo a medida que aumentan las particulas, pero ahora se ve un comportamiento lineal y una gran mejora en cuanto a la demora del programa; en esta ocasión se hizo correr el programa con 4, 8, 12, 24, 32, 44, 60 y 100 particulas, con un dt de 0.00001 s en un intervalo de 0.05 s . Lo que dio los siguientes resultados.
+
+Np = 32 particulas
+
+![Grafico 32 particulas](https://user-images.githubusercontent.com/53495949/68261447-edfcad80-001e-11ea-8e51-ffe84fe4b1bd.png)
+
+Np = 60 particulas
+
+![Grafico 60 particulas](https://user-images.githubusercontent.com/53495949/68261582-56e42580-001f-11ea-96df-2f1a725d23ac.png)
+
+Np = 100 particulas
+
+![Grafico 100 particulas](https://user-images.githubusercontent.com/53495949/68261922-631cb280-0020-11ea-9823-80a7da754e43.png)
+
+
+Finalmente se obtiene la siguiente relación:
+
+Gráfico de tiempo
+![Captura](https://user-images.githubusercontent.com/53495949/68262163-2f8e5800-0021-11ea-8a31-305994a38e42.JPG)
+
